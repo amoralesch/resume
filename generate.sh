@@ -6,6 +6,8 @@ mkdir -p outputs
 
 for lang in en es; do
     for style in technical executive; do
+        echo "Generating $style ($lang) ..."
+
         pandoc content/$lang.md \
             metadata/$lang.yaml \
             --template=templates/$style.latex \
@@ -24,4 +26,6 @@ for lang in en es; do
     done
 done
 
-cp templates/index.html outputs/index.html
+[ -f templates/index.html ] && cp templates/index.html outputs/index.html
+
+echo "Build complete!"
