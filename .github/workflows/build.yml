@@ -12,10 +12,11 @@ jobs:
     - name: Checkout repo
       uses: actions/checkout@v4
 
-    - name: Install Pandoc + TinyTeX
+    - name: Install Pandoc
       uses: r-lib/actions/setup-pandoc@v2
-      with:
-        tinytex: true
+
+    - name: Install TinyTeX
+      uses: r-lib/actions/setup-tinytex@v2
 
     - name: Generate resumes
       run: |
