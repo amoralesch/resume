@@ -26,6 +26,7 @@ jobs:
             pandoc content/$lang.md \
               metadata/$lang.yaml \
               --template=templates/$style.latex \
+              --pdf-engine=xelatex \
               -o outputs/${style}_${lang}.pdf
 
             pandoc content/$lang.md \
