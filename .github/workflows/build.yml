@@ -1,0 +1,48 @@
+name: Build and Publish Resume
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v4
+
+    - name: Install pandoc
+      uses: r-lib/actions/setup-pandoc@v2
+
+    - name: Install TeX environment
+      uses: xu-cheng/latex-action@v3
+
+    - name: Generate resumes
+      run: |
+        mkdir -p outputs
+        for lang in en es; do
+          for style in technical executive; do
+            pandoc content/$lang.md \
+              metadata/$lang.yaml \
+              --template=templates/$style.latex \
+              -o outputs/${style}_${lang}.pdf
+
+            pandoc content/$lang.md \
+              metadata/$lang.yaml \
+              --reference-doc=templates/reference.docx \
+              -o outputs/${style}_${lang}.docx
+
+            pandoc content/$lang.md \
+              metadata/$lang.yaml \
+              --template=templates/$style.html \
+              -o outputs/${style}_${lang}.html
+          done
+        done
+
+    - name: Deploy HTML to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_branch: gh-pages
+        publish_dir: outputs
