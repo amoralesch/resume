@@ -9,6 +9,7 @@ for lang in en es; do
         pandoc content/$lang.md \
             metadata/$lang.yaml \
             --template=templates/$style.latex \
+            --pdf-engine=xelatex \
             -o outputs/${style}_${lang}.pdf
 
         pandoc content/$lang.md \
@@ -22,3 +23,5 @@ for lang in en es; do
             -o outputs/${style}_${lang}.html
     done
 done
+
+cp templates/index.html outputs/index.html
