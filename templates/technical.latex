@@ -1,0 +1,13 @@
+\documentclass{article}
+\usepackage{fontspec}
+\begin{document}
+
+% Name
+{\Huge \textbf{$name$}}
+
+% Title
+{\large $title$}
+
+$body$
+
+\end{document}
